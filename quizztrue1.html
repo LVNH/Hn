@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title> Chặng cuối</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://fg43.dlfl.me/63031420f825517b0834/5004146381198185214');
+            background-size: cover;
+            text-align: center;
+            color: rgb(42, 39, 39); /* Chữ đen để nổi bật trên nền */
+            display: flex;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+            margin: 0; /* Xóa margin mặc định */
+        }
+
+        .container {
+            width: 800px;
+            max-height: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Nền trắng với độ trong suốt */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 36px; /* Chữ lớn hơn */
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #question {
+            font-size: 28px; /* Chữ lớn hơn cho câu hỏi */
+            margin-bottom: 20px;
+        }
+
+        .answer-btn {
+            background-color: #007BFF;
+            color: rgb(61, 53, 53);
+            border: none;
+            padding: 15px 20px; /* Tăng kích thước nút */
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Chữ lớn hơn trong nút */
+        }
+
+        .answer-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #next-button {
+            margin-top: 20px;
+            font-size: 18px; /* Chữ lớn hơn cho nút "Tiếp theo" */
+            border-radius: 10%;
+            padding: 1%;
+            background-color: antiquewhite;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .correct {
+            background-color: #28a745; /* Màu xanh khi đúng */
+        }
+
+        .wrong {
+            background-color: #dc3545; /* Màu đỏ khi sai */
+        }
+        #restart-button {
+            margin-top: 20px;
+            font-size: 18px; /* Chữ lớn hơn cho nút "Quay lại trò chơi" */
+            display: none; /* Ẩn mặc định */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Trả lời câu hỏi để trở thành Hero </h1>
+        <div id="question-container">
+            <div id="question">Câu hỏi sẽ hiện ở đây</div>
+            <div id="answers">
+                <button class="answer-btn">A</button>
+                <button class="answer-btn">B</button>
+                <button class="answer-btn">C</button>
+                <button class="answer-btn">D</button>
+            </div>
+        </div>
+        <button id="next-button" class="hide">Tiếp theo</button>
+        <div id="score-container">
+            <p> Số câu trả lời đúng: <span id="score">0</span></p>
+        </div>
+        <button id="restart-button" class="hide">Quay lại trò chơi</button>
+
+    </div>
+
+    <!-- Âm thanh cho câu trả lời đúng và sai -->
+    <audio id="correct-sound" src="/Game 12/y2meta.com - Correct sound effect and wrong sound effect (128 kbps) (1).mp3"></audio>
+    <audio id="wrong-sound" src="/Game 12/y2meta.com - Wrong Buzzer - Sound Effect (128 kbps) (1).mp3"></audio>
+
+    <script>
+        const questions = [
+            {
+                question: "Điều gì là một thách thức lớn trong phát triển AI?",
+                answers: [
+                    { text: "Thiếu dữ liệu", correct: false },
+                    { text: "Quá trình tính toán chậm", correct: false },
+                    { text: "Đạo đức và sự minh bạch", correct: false },
+                    { text: "Tất cả các yếu tố trên", correct: true }
+                ]
+            },
+            {
+                question: "Công nghệ nào giúp AI hiểu ngôn ngữ tự nhiên?",
+                answers: [
+                    { text: "Học máy", correct: false },
+                    { text: "Xử lý ngôn ngữ tự nhiên (NLP)", correct: true },
+                    { text: "Mạng nơ-ron", correct: false },
+                    { text: "Tất cả đều đúng.", correct: false }
+                ]
+            },
+            {
+                question: "AI có thể được sử dụng để làm gì trong ngành sản xuất?",
+                answers: [
+                    { text: "Tự động hóa quy trình", correct: false },
+                    { text: "Dự đoán bảo trì", correct: false },
+                    { text: "Tối ưu hóa chuỗi cung ứng", correct: false },
+                    { text: "Tất cả các lựa chọn trên", correct: true }
+                ]
+            },
+            {
+                question: "Cái gì không là một trong những yếu tố quan trọng trong phát triển AI?",
+                answers: [
+                    { text: "Dữ liệu", correct: false },
+                    { text: "Phần cứng", correct: false },
+                    { text: "Thuật toán", correct: false },
+                    { text: "Ngôn ngữ lập trình", correct: true }
+                ]
+            },
+            {
+                question: "Khái niệm Internet of Things (IoT) có liên quan đến AI như thế nào?",
+                answers: [
+                    { text: "Tạo ra dữ liệu cho AI", correct: true },
+                    { text: "Tính tự động", correct: false },
+                    { text: "Xử lý dữ liệu", correct: false },
+                    { text: "Tất cả các lựa chọn trên", correct: false }
+                ]
+            },
+        ];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionContainer = document.getElementById('question-container');
+        const questionElement = document.getElementById('question');
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        const nextButton = document.getElementById('next-button');
+        const restartButton = document.getElementById('next-button');
+        const scoreElement = document.getElementById('score');
+        const correctSound = document.getElementById('correct-sound');
+        const wrongSound = document.getElementById('wrong-sound');
+
+        function startGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.classList.add('hide');
+            restartButton.classList.add('hide');
+            showQuestion(questions[currentQuestionIndex]);
+        }
+
+        function showQuestion(question) {
+            questionElement.innerText = question.question;
+            answerButtons.forEach((button, index) => {
+                button.innerText = question.answers[index].text;
+                button.dataset.correct = question.answers[index].correct;
+                button.classList.remove('correct', 'wrong'); // Xóa các lớp cũ
+                button.addEventListener('click', selectAnswer);
+            });
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const correct = selectedButton.dataset.correct === 'true';
+
+            if (correct) {
+                score++;
+                scoreElement.innerText = score;
+                correctSound.play(); // Phát âm thanh đúng
+                selectedButton.classList.add('correct');
+            } else {
+                wrongSound.play(); // Phát âm thanh sai
+                selectedButton.classList.add('wrong');
+            }
+
+            answerButtons.forEach(button => {
+                button.removeEventListener('click', selectAnswer);
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('correct'); // Đánh dấu câu đúng
+                } else {
+                    button.classList.add('wrong'); // Đánh dấu câu sai
+                }
+            });
+
+            if (currentQuestionIndex < questions.length - 1) {
+                nextButton.classList.remove('hide');
+            } else {
+                alert(`Trò chơi kết thúc! Điểm số của bạn là ${score}`);
+                nextButton.classList.add('hide'); // Ẩn nút tiếp theo
+                restartButton.classList.remove('hide'); // Hiện nút quay lại trò chơi
+                if (score >= 3) {
+                    const msg = "Chúc mừng bạn đã giải cứu được Tiến sĩ và Lumi";
+                    nextButton.outerHTML += `
+                      <div class="container-collect-cgun">
+                        <h2 style="color:black">${msg}</h2>
+                    </div>
+                    `;
+                }else {
+                    const msg = "Nhiệm vụ thất bại - Bạn đã thua";
+                    nextButton.outerHTML += `
+                      <div class="container-collect-cgun">
+                        <h2 style="color:black">${msg}</h2>
+                        <a href="file:///D:/Game%2012/basic.html"><button id="collect-cgun-btn" class="button"> <h3 style = "color: #FF9999"> Chơi lại <h3></button></a>
+                      </div>
+                    `;
+                }
+            }
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            showQuestion(questions[currentQuestionIndex]);
+            nextButton.classList.add('hide');
+        });
+
+        startGame();
+    </script>
+</body>
+</html>

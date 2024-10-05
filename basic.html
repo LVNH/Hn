@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://cryptogunner.online/wp-content/uploads/2023/03/Logotipo_Token2.png" type="image/x-icon">
+  <title> Cuộc du hành không gian </title>
+</head> 
+<body>
+  <audio id="song" autoplay loop>
+    <source src="/Game 12/y2meta.com - Nhạc hào hùng hoành tráng (128 kbps).mp3" type="audio/mpeg">
+  </audio>
+   <div class="container">
+      <div class="container-game-info">
+        <div class="container-bullets">
+          <h2 id="bullets"></h2><h2 id="bullets-num"></h2>
+        </div>
+        <div class="container-timer">
+          <h2 id="timer"></h2><h2 id="timer-num"></h2>
+        </div>
+        <div class="container-score">
+          <h2 id="score"></h2><h2 id="score-num"></h2>        
+        </div>      
+      </div>
+  <button type="button" class="button">START</button>
+      <div class="start-timer">
+        <h1 id="start-timer"></h1>
+      </div>
+  
+  
+      <div class="game-rules">
+          <h3> Space advanture </h3>
+          <p><h4>Tiến sĩ Minh đã gặp phải một lũ quái vật AI - Hãy cứu giúp ông ấy bằng cách bắn hạ chúng</h4></p>
+          <h3> Rule of the game </h3>
+          <ul>
+              <li> <h4>Bạn có 15 viên đạn tương ứng phải bắn hạ 15 con quái vật AI</h4></li>
+              <li> <h4>Chúng có một bộ máy tân tiến bậc nhất vì vậy bạn cần bắn hạ chúng nhanh nhất có thể ( ít hơn 20s bạn sẽ sống sót)</h4></li>
+          </ul>
+      </div>
+  
+      <div class="container-button-start">
+      </div>
+      <img
+        src="https://clipart-library.com/img1/37366.gif"
+        alt="Crosshair"
+        class="cursor"
+      />
+      <img
+        src="https://clipart-library.com/images_k/bullet-hole-transparent/bullet-hole-transparent-19.png"
+        alt="Bullet Hole"
+        class="bulletHole"
+      />
+      <img
+        src="https://clipart-library.com/images/Lcd5A9bbi.png"
+        alt="Blood Spot"
+        class="bloodSpot"
+      />
+    </div>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
+
+      
+      h3 {
+              color: red;
+              text-align: center;
+              font-family: "Rubik Wet Paint", sans-serif;
+              padding: 10px;
+          }
+      .game-rules::-webkit-scrollbar {
+        display: none !important;
+      }
+      
+          .game-rules {
+              overflow: auto;
+               scrollbar-width: none !important;
+              color: lightgrey;
+              display: block;
+              padding-left: 50px;
+              padding-right: 50px;
+              padding-bottom: 50px;
+              max-width: 30%;
+              margin-top: -280px;
+              margin-bottom: 50px;
+      
+              background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+              backdrop-filter: blur(5px);
+              -webkit-backdrop-filter: blur(5px);
+              border-radius: 10px;
+              border:1px solid rgba(255, 255, 255, 0.18);
+              box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.30);
+          }
+      
+        body {
+          overflow: hidden;
+          background-image: url("https://fg43.dlfl.me/0bf6cf949f9436ca6f85/1797937061404807279");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          height: 100vh;
+          text-align: left;
+          cursor: default;
+        }
+      
+        button {
+          margin-bottom: 50px;
+          z-index: 1000;
+          color: #fff;
+          border: 2px solid #fff;
+          background: #FF6666;
+          padding: 15px 45px;
+          font-size: 1.3rem;
+          outline: none;
+          font-weight: 700;
+          border-radius: 20%;
+        }
+      
+        #bullets, #timer, #score {
+          font-family: "Rubik Wet Paint", sans-serif;
+          font-size: 40px;
+          color: #ff0000;
+          margin-right: 20px;
+        }
+      
+        #bullets-num, #timer-num, #score-num {
+          font-family: sans-serif;
+          font-size: 40px;
+          color: #fff;
+        text-shadow: 
+          -2px -2px 0 black,   
+          2px -2px 0 black,   
+          -2px 2px 0 black,   
+          2px 2px 0 black;
+      }
+      
+        .container-timer, .container-bullets, .container-score {
+          display: flex;
+          flex-direction: row;
+        }
+      
+        h1 {
+          color: #fff;
+          font-size: 150px;
+          font-family: sans-serif;
+        }
+        h4 {
+          color: #fff;
+          font-size: 17px;
+          font-family:serif;
+        }
+        img::selection {
+          background: transparent;
+        }
+      
+        .start-timer {
+          margin-top: 20vh;
+        }
+      
+        .container,
+        .container-game-info,
+        .container-button-start,
+        .container-collect-cgun {
+          display: flex;
+          align-items: center;
+          width: 100%;
+        }
+      
+        .container {
+          flex-direction: column;
+          position: relative;
+          height: 100%;
+          overflow: hidden;
+        }
+      
+        .container-game-info {
+          flex-direction: row;
+          justify-content: space-around;
+        }
+      
+        .container-button-start {
+          width: fit-content;
+          margin-top: 0vh;
+        }
+      
+        .container-collect-cgun {
+          justify-content: center;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+      
+        .bulletHole {
+          position: absolute;
+          height: 50px;
+          transform: translate(-50%, -50%);
+          z-index: 3;
+          display: none;
+        }
+      
+        .zombie {
+          height: 100px;
+        }
+      
+        .bloodSpot {
+          display: none;
+          position: absolute;
+          height: 50px;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+        }
+      
+        .cursor {
+          position: absolute;
+          height: 70px;
+          transform: translate(-50%, -50%);
+          pointer-events: none;
+          z-index: 2;
+          transition: 0.3s transform ease;
+          transform-origin: 100% 100%;
+          display: none;
+        }
+    </style>
+    <script>
+          
+
+const maxScore = 15 
+let timerCount = 20 
+let bullets = 15
+
+let timer;
+let startTimerCount = 4;
+let startTimer;
+let gameStarted = false
+let score = 0;
+let canShoot = false
+
+
+const shootAudio = new Audio("https://cdn.pixabay.com/download/audio/2022/03/26/audio_d0ed19ffb1.mp3?filename=gun_in_small_room_02-107590.mp3");
+shootAudio.volume = 0.3;
+const moneySound = new Audio("https://cryptogunner.online/wp-content/uploads/2023/05/coins.mp3");
+moneySound.volume = 0.3;
+const bulletsElement = document.querySelector("#bullets");
+const scoreElement = document.querySelector("#score");
+const timerElement = document.querySelector("#timer");
+const bulletsElementNum = document.querySelector("#bullets-num");
+const scoreElementNum = document.querySelector("#score-num");
+const timerElementNum = document.querySelector("#timer-num");
+const cursor = document.querySelector(".cursor");
+const container = document.querySelector(".container");
+const bulletHole = document.querySelector(".bulletHole");
+const bloodSpot = document.querySelector(".bloodSpot");
+const button = document.querySelector(".button");
+const zombie = document.createElement("img");
+const startTimerElementNum = document.getElementById("start-timer");
+const gameRules = document.querySelector(".game-rules");
+
+window.addEventListener('click', () => {
+    document.getElementById("song").play();
+    window.volume = 1;
+});
+
+
+zombie.setAttribute("class", "zombie");
+const randomNumber = Math.floor(Math.random() * 100);
+let backgroundMusic;
+
+if (randomNumber >= 0 && randomNumber <= 33) {
+  zombie.setAttribute("src","https://png.pngtree.com/png-vector/20240516/ourlarge/pngtree-a-monster-mecha-robot-png-image_12479324.png");
+  backgroundMusic = new Audio('https://cryptogunner.online/wp-content/uploads/2023/05/background-sound.mp3');
+} else
+
+if (randomNumber >= 34 && randomNumber <= 66) {
+  zombie.setAttribute("src","https://png.pngtree.com/png-vector/20240516/ourlarge/pngtree-a-monster-mecha-robot-png-image_12479324.png");
+  backgroundMusic = new Audio('https://cryptogunner.online/wp-content/uploads/2023/04/Creepy-Action.mp3');
+} else
+
+if (randomNumber >= 67 && randomNumber <= 100) {
+  zombie.setAttribute("src","https://png.pngtree.com/png-vector/20240516/ourlarge/pngtree-a-monster-mecha-robot-png-image_12479324.png");
+  backgroundMusic = new Audio('https://cryptogunner.online/wp-content/uploads/2023/04/Castle-of-Horrors.mp3');
+}
+const contHeight = container.offsetHeight;
+const contWidth = container.offsetWidth;
+setInterval(() => {
+  const randTop = Math.random() * (contHeight - 100);
+  const randLeft = Math.random() * (contWidth - 100);
+  zombie.style.position = "absolute";
+  zombie.style.top = randTop + "px";
+  zombie.style.left = randLeft + "px";
+}, 1000);
+
+
+
+button.addEventListener("mousedown", startGame)
+bulletsElementNum.innerHTML = bullets;
+scoreElementNum.innerHTML = `${score} / ${maxScore}`;
+timerElementNum.innerHTML = timerCount;
+
+
+
+function abrirTelaCheia() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { 
+      elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { 
+      elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { 
+      elem.msRequestFullscreen();
+  }
+}
+
+async function startGame() {
+  if(button.innerText === "START") {
+
+    button.style.display = "none";
+    gameRules.style.display = "none";
+
+abrirTelaCheia();
+
+   
+    startTimer = setInterval(() => {
+      startTimerCount--;
+      startTimerElementNum.innerText = startTimerCount;
+      if(startTimerCount <= -1) {
+        clearInterval(startTimer);
+        startTimerElementNum.innerText = "GO!";
+        startTimerElementNum.style.color = "#CC0000";
+        startTimerElementNum.style.fontFamily = '"Rubik Wet Paint", sans-serif';
+        setTimeout(() => {
+          startTimerElementNum.style.display = "none";
+          setTimeout(() => {
+              initializeGame()
+          }, 1000);
+          backgroundMusic.volume = 0.1;
+          backgroundMusic.play();
+        }, 1000);
+      }
+    }, 1000);
+
+    function initializeGame() {
+      setTimeout(() => {
+        canShoot = true
+      }, 420);
+      gameStarted = true
+      document.body.style.cursor = "none"
+      cursor.style.display = "block"
+      container.appendChild(zombie);
+      timer = setInterval(function() {
+        if(timerCount <= 0) {
+          clearInterval(timer);
+          endGame()
+        }
+        timerElementNum.innerHTML = timerCount;
+        timerCount--;
+      }, 1000);
+    }
+  }
+}
+
+function endGame() {
+  container.removeChild(zombie);
+  button.innerText = "THUA RỒI";
+  gameStarted = false;
+  document.body.style.cursor = "default";
+  cursor.style.display = "none";
+
+  let msg;
+  const finalScore = score;
+
+  if (finalScore < 5) {
+    msg = "Bạn đã thua - Bạn phải trả lời một vài câu hỏi khó";
+    container.innerHTML = `
+      <div class="container-collect-cgun">
+        <h2 style="color:white">${msg}</h2>
+        <a href="file:///D:/Game%2012/quizz.html"><button id="collect-cgun-btn" class="button" onclick="collectBullets()">Bấm vào để nhận thêm đạn</button></a>
+      </div>
+    `;
+  } else if (finalScore >= 5 && finalScore < 10) {
+    msg = "Tạm được thôi - Bạn còn non lắm - Mời bạn trả lời câu hỏi sau";
+    container.innerHTML = `
+      <div class="container-collect-cgun">
+        <h2 style="color:white">${msg}</h2>
+        <a href="file:///D:/Game%2012/quizzwrong2.html"><button id="collect-cgun-btn" class="button" onclick="collectBullets()">Bấm vào để nhận thêm đạn</button></a>
+      </div>
+    `;
+  } else if (finalScore >= 5 && finalScore < 15) {
+    msg = "Rank Silver - Bạn còn non lắm - Trả lời câu hỏi sau để được qua vòng";
+    container.innerHTML = `
+      <div class="container-collect-cgun">
+        <h2 style="color:white">${msg}</h2>
+        <a href="file:///D:/Game%2012/quizztrue1.html"><button id="collect-cgun-btn" class="button" onclick="collectBullets()">Bấm vào để nhận thêm đạn</button></a>
+      </div>
+    `;
+  }
+   else if (finalScore === 15) {
+    msg = "Bạn đã qua màn!";
+    container.innerHTML = `
+      <div class="container-collect-cgun">
+        <h2 style="color:white">${msg}</h2>
+        <a href="file:///D:/Game%2012/quizztrue2.html"><button id="collect-cgun-btn" class="button" onclick="collectBullets()">Bấm vào để nhận thêm đạn</button></a>
+      </div>
+    `;
+  }
+}
+
+
+async function collectCgun() {
+  const collectCgunBtn = document.getElementById("collect-cgun-btn");
+  if(collectCgunBtn.textContent === "GRATS! Come back tomorrow!") {
+    collectCgunBtn.textContent === "You already have collected you prize today!"
+    setTimeout(() => {
+      // disable the button
+      collectCgunBtn.disabled = true;
+    }, 3000);
+    return
+  };
+
+  collectCgunBtn.textContent = "Chúc mừng bạn";
+  moneySound.play();
+  setTimeout(() => {
+      window.location.href = "https://codepen.io/Zehn1984/pen/BaqRxRK";
+  }, 1000);
+}
+scoreElement.innerHTML = "Score:";
+bulletsElement.innerHTML = "Bullet:";
+timerElement.innerHTML = "Timer:";
+
+function shoot(e) {
+  if(canShoot) {
+    canShoot = false
+    e.preventDefault();
+    bulletHole.style.top = e.pageY + "px";
+    bulletHole.style.left = e.pageX + "px";
+    shootAudio.play()
+    bullets--;
+    bulletsElementNum.innerHTML = bullets;
+    if (e.target === zombie) {
+      score++;
+      bloodSpot.style.top = e.pageY + "px";
+      bloodSpot.style.left = e.pageX + "px";
+      bloodSpot.style.display = "block";
+      bulletHole.style.display = "block";
+      setTimeout(() => {
+        bloodSpot.style.display = "none";
+      }, 415);
+      if(score >= maxScore) {
+        endGame()
+      }
+      else {
+        scoreElementNum.innerHTML = `${score} / ${maxScore}`;
+      }
+    }
+    if(bullets <= 0) {
+      endGame()
+    }
+    setTimeout(() => {
+      canShoot = true
+    }, 420);
+  }
+}
+
+window.addEventListener("mousedown", (e) => {
+  if(gameStarted) {
+    shoot(e)
+  }
+});
+
+
+window.addEventListener("mousemove", (e) => {
+  cursor.style.top = e.pageY + "px";
+  cursor.style.left = e.pageX + "px";
+});
+    </script>
+  </body>
